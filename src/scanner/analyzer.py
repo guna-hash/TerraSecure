@@ -1,7 +1,13 @@
 from scanner.parser import TerraformParser
 from rules.security_rules import SecurityRules
 
-# Try to import ML analyzer, but don't fail if it doesn't exist
+
+try:
+    from llm.llm_analyzer import LLMAnalyzer
+    LLM_AVAILABLE = True
+except ImportError:
+    LLM_AVAILABLE = False
+    print("⚠️  LLM module not available")
 try:
     from ml.ml_analyzer import MLAnalyzer
     ML_AVAILABLE = True
@@ -15,16 +21,24 @@ class SecurityAnalyzer:
     def __init__(self):
         self.parser = TerraformParser()
         self.rules = SecurityRules.get_all_rules()
-        
-        # Initialize ML analyzer if available
+    
         if ML_AVAILABLE:
             try:
                 self.ml_analyzer = MLAnalyzer()
             except Exception as e:
-                print(f"⚠️  Could not initialize ML analyzer: {e}")
+                print(f"⚠️  ML analyzer init failed: {e}")
                 self.ml_analyzer = None
         else:
             self.ml_analyzer = None
+    
+        if LLM_AVAILABLE:
+            try:
+                self.llm_analyzer = LLMAnalyzer()
+            except Exception as e:
+                print(f"⚠️  LLM analyzer init failed: {e}")
+                self.llm_analyzer = None
+        else:
+            self.llm_analyzer = None
     
     def scan_file(self, filepath):
         """Scan a single file"""
@@ -37,24 +51,14 @@ class SecurityAnalyzer:
         return self._analyze_resources(resources)
     
     def _analyze_resources(self, resources):
-        """
-        Analyze list of resources against rules
-        
-        Returns:
-            {
-                'total_resources': int,
-                'issues': [list of findings],
-                'stats': {severity counts}
-            }
-        """
+    
         findings = []
         stats = {'CRITICAL': 0, 'HIGH': 0, 'MEDIUM': 0, 'LOW': 0}
-        
+    
         for resource in resources:
             for rule_name, rule in self.rules.items():
                 if self._check_rule(resource, rule):
                     
-                    # Get ML analysis if available
                     if self.ml_analyzer:
                         try:
                             ml_result = self.ml_analyzer.analyze(resource)
@@ -63,7 +67,7 @@ class SecurityAnalyzer:
                             ml_result = self._default_ml_result()
                     else:
                         ml_result = self._default_ml_result()
-                    
+                
                     finding = {
                         'rule': rule_name,
                         'severity': rule['severity'],
@@ -77,9 +81,18 @@ class SecurityAnalyzer:
                         'ml_prediction': ml_result.get('ml_prediction', 'UNKNOWN'),
                         'triggered_features': ml_result.get('triggered_features', [])
                     }
+                
+                    if self.llm_analyzer and self.llm_analyzer.enabled:
+                        try:
+                            finding = self.llm_analyzer.enhance_finding(
+                                resource, ml_result, finding
+                            )
+                        except Exception as e:
+                            print(f"⚠️  LLM enhancement failed: {e}")
+                
                     findings.append(finding)
                     stats[rule['severity']] += 1
-        
+    
         return {
             'total_resources': len(resources),
             'issues': findings,
