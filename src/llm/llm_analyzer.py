@@ -1,8 +1,3 @@
-"""
-LLM Analyzer for TerraSecure
-With intelligent fallback mode (no API needed for demo)
-"""
-
 import os
 import json
 from dotenv import load_dotenv
@@ -19,21 +14,20 @@ class LLMAnalyzer:
         self.enabled = True
         
         if self.use_real_llm:
-            # Try to initialize real LLM
             try:
                 from openai import OpenAI
                 api_key = os.getenv('OPENAI_API_KEY')
                 if api_key:
                     self.client = OpenAI(api_key=api_key)
-                    print("✅ LLM (OpenAI) initialized")
+                    print("LLM (OpenAI) initialized")
                 else:
-                    print("⚠️  No API key - using intelligent fallback")
+                    print("No API key - using intelligent fallback")
                     self.client = None
             except Exception as e:
-                print(f"⚠️  LLM init failed - using intelligent fallback: {e}")
+                print(f"LLM init failed - using intelligent fallback: {e}")
                 self.client = None
         else:
-            print("✅ LLM (Intelligent Fallback Mode) initialized")
+            print("LLM (Intelligent Fallback Mode) initialized")
             self.client = None
     
     def enhance_finding(self, resource, ml_result, rule_finding):
@@ -46,15 +40,12 @@ class LLMAnalyzer:
             return rule_finding
         
         try:
-            # Try real LLM if available
             if self.client and self.use_real_llm:
                 return self._real_llm_analysis(resource, ml_result, rule_finding)
             else:
-                # Use intelligent fallback
                 return self._intelligent_fallback(resource, ml_result, rule_finding)
         
         except Exception as e:
-            # Fallback on any error
             return self._intelligent_fallback(resource, ml_result, rule_finding)
     
     def _intelligent_fallback(self, resource, ml_result, rule_finding):
@@ -67,7 +58,7 @@ class LLMAnalyzer:
         resource_name = resource.get('name', '')
         severity = rule_finding['severity']
         
-        # Context-aware templates based on resource type and issue
+
         analysis = self._generate_smart_analysis(
             resource_type, 
             resource_name, 
@@ -83,8 +74,7 @@ class LLMAnalyzer:
     
     def _generate_smart_analysis(self, resource_type, resource_name, severity, message, ml_result):
         """Generate intelligent, context-aware analysis"""
-        
-        # S3 Bucket Analysis
+
         if resource_type == 'aws_s3_bucket':
             if 'public' in message.lower():
                 return {
@@ -362,5 +352,5 @@ For emergency external access, use SSH tunnel:
 # Quick test
 if __name__ == '__main__':
     analyzer = LLMAnalyzer()
-    print("\n✅ LLM Analyzer is ready!")
-    print("✅ Works offline - no API calls needed!")
+    print("\n LLM Analyzer is ready!")
+    print("Works offline - no API calls needed!")
