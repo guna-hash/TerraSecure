@@ -34,6 +34,5 @@ jobs:
       
       - name: Run security scan on project
         run: |
-          # This would scan actual Terraform files in your repo
           terrasecure . --fail-on high --format json
         continue-on-error: true
