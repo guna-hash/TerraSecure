@@ -1,0 +1,159 @@
+{
+  "version": "1.0.0",
+  "build_date": "2026-03-09T20:03:11.290802",
+  "training_samples": 265,
+  "features": [
+    "open_cidr_0_0_0_0",
+    "open_ssh_port_22",
+    "open_rdp_port_3389",
+    "iam_wildcard_action",
+    "iam_wildcard_resource",
+    "iam_inline_user_policy",
+    "s3_public_acl",
+    "s3_block_public_access_disabled",
+    "s3_versioning_disabled",
+    "s3_encryption_disabled",
+    "rds_publicly_accessible",
+    "rds_storage_unencrypted",
+    "ec2_public_ip_associated",
+    "ebs_unencrypted_volume",
+    "kms_key_rotation_disabled",
+    "cloudtrail_not_enabled",
+    "cloudwatch_log_retention_missing",
+    "elb_http_listener_only",
+    "lambda_no_vpc_config",
+    "hardcoded_aws_credentials",
+    "sg_all_ports_open",
+    "sg_egress_unrestricted",
+    "nacl_allow_all_traffic",
+    "vpc_flow_logs_disabled",
+    "route_to_igw_from_private",
+    "default_sg_in_use",
+    "open_database_port_3306",
+    "open_database_port_5432",
+    "root_account_in_use",
+    "mfa_not_enabled",
+    "password_policy_weak",
+    "unused_iam_credentials",
+    "s3_bucket_policy_public",
+    "cross_account_access_unrestricted",
+    "assume_role_no_external_id",
+    "s3_lifecycle_policy_missing",
+    "s3_mfa_delete_disabled",
+    "snapshot_publicly_shared",
+    "backup_vault_unencrypted",
+    "secrets_in_environment_vars",
+    "config_recorder_disabled",
+    "guardduty_not_enabled",
+    "security_hub_not_enabled",
+    "access_logging_disabled",
+    "alarm_missing_for_changes",
+    "sns_topic_unencrypted",
+    "ecr_image_scan_disabled",
+    "ecs_task_privilege_escalation",
+    "api_gateway_no_waf",
+    "lambda_env_vars_unencrypted"
+  ],
+  "feature_count": 50,
+  "model_type": "XGBoost",
+  "hyperparameters": {
+    "n_estimators": 200,
+    "max_depth": 10,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8
+  },
+  "performance": {
+    "cv_mean_accuracy": 0.6981132075471697,
+    "cv_std_accuracy": 0.14319747895102097,
+    "test_accuracy": 0.9245283018867925,
+    "test_precision": 0.8888888888888888,
+    "test_recall": 0.96,
+    "test_f1": 0.923076923076923,
+    "false_positive_rate": 0.10714285714285714,
+    "false_negative_rate": 0.04
+  },
+  "quality_gates_passed": true,
+  "top_features": [
+    {
+      "feature": "open_database_port_3306",
+      "importance": 0.12168040871620178
+    },
+    {
+      "feature": "api_gateway_no_waf",
+      "importance": 0.09191083908081055
+    },
+    {
+      "feature": "rds_storage_unencrypted",
+      "importance": 0.0880255401134491
+    },
+    {
+      "feature": "vpc_flow_logs_disabled",
+      "importance": 0.0839482992887497
+    },
+    {
+      "feature": "s3_encryption_disabled",
+      "importance": 0.0785602331161499
+    },
+    {
+      "feature": "lambda_env_vars_unencrypted",
+      "importance": 0.061486899852752686
+    },
+    {
+      "feature": "rds_publicly_accessible",
+      "importance": 0.05050273984670639
+    },
+    {
+      "feature": "iam_wildcard_resource",
+      "importance": 0.044721733778715134
+    },
+    {
+      "feature": "secrets_in_environment_vars",
+      "importance": 0.04296569153666496
+    },
+    {
+      "feature": "mfa_not_enabled",
+      "importance": 0.042952314019203186
+    },
+    {
+      "feature": "access_logging_disabled",
+      "importance": 0.03307808190584183
+    },
+    {
+      "feature": "s3_block_public_access_disabled",
+      "importance": 0.032579053193330765
+    },
+    {
+      "feature": "default_sg_in_use",
+      "importance": 0.032353874295949936
+    },
+    {
+      "feature": "backup_vault_unencrypted",
+      "importance": 0.029184700921177864
+    },
+    {
+      "feature": "alarm_missing_for_changes",
+      "importance": 0.028664622455835342
+    },
+    {
+      "feature": "ecs_task_privilege_escalation",
+      "importance": 0.028313318267464638
+    },
+    {
+      "feature": "ecr_image_scan_disabled",
+      "importance": 0.022960199043154716
+    },
+    {
+      "feature": "s3_lifecycle_policy_missing",
+      "importance": 0.022549333050847054
+    },
+    {
+      "feature": "s3_public_acl",
+      "importance": 0.016917258501052856
+    },
+    {
+      "feature": "s3_versioning_disabled",
+      "importance": 0.011555340141057968
+    }
+  ]
+}
