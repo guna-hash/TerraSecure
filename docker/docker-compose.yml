@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  terrasecure:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: terrasecure:latest
+    container_name: terrasecure
+
+    volumes:
+      - ./examples:/scan:ro
+
+    command: ["/scan", "--format", "json"]
+
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '1'
+
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  dashboard:
+    image: terrasecure-dashboard:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - TERRASECURE_API=http://terrasecure:5000
+    depends_on:
+      - terrasecure
+    profiles:
+      - dashboard
