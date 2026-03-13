@@ -7,7 +7,7 @@ Catch infrastructure misconfigurations before they become breaches.
 [![Docker](https://img.shields.io/badge/docker-ghcr.io%2Fjashwanthmu%2Fterrasecure-blue)](https://ghcr.io/jashwanthmu/terrasecure)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![Platform](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20ubuntu-lightgrey)]()
+[![Platform](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20mac-lightgrey)]()
 [![DevSecOps](https://img.shields.io/badge/DevSecOps-Tool-green)]()
 [![ML Model](https://img.shields.io/badge/XGBoost-brightgreen)]()
 [![SARIF](https://img.shields.io/badge/SARIF-2.1.0-orange)]()
