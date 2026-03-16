@@ -1,4 +1,4 @@
-name: 'TerraSecure'
+name: 'TerraSecure IaC Scanner'
 description: 'AI-Powered Terraform Security Scanner with ML risk scoring and SARIF output'
 author: 'JashwanthMU'
 
