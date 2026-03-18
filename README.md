@@ -1,16 +1,39 @@
 <div align="center">
 
-<img src="assets/logo.svg" alt="TerraSecure Logo" width="200" height="200">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/🛡️_TERRASECURE-AI_Powered_Security_Scanner-4A90E2?style=for-the-badge&labelColor=1a1a1a&logoColor=white">
+  <img alt="TerraSecure" src="https://img.shields.io/badge/🛡️_TERRASECURE-AI_Powered_Security_Scanner-4A90E2?style=for-the-badge&labelColor=f0f0f0">
+</picture>
 
-**AI-Powered Terraform Security Scanner**
+### ML-Powered Terraform & IaC Security Scanner
 
-[![GitHub release](https://img.shields.io/github/v/release/JashwanthMU/TerraSecure)](https://github.com/JashwanthMU/TerraSecure/releases)
-[![Docker Pulls](https://img.shields.io/badge/docker-ghcr.io-blue)](https://github.com/JashwanthMU/TerraSecure/pkgs/container/terrasecure)
-[![GitHub Action](https://img.shields.io/badge/marketplace-action-green)](https://github.com/marketplace/actions/terrasecure-security-scanner)
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](https://github.com/JashwanthMU/TerraSecure/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+<p align="center">
+  <b>92% Accuracy</b> • <b>10.7% False Positives</b> • <b>Offline Ready</b>
+</p>
 
-[Quick Start](#-quick-start) • [Features](#-features) • [Installation](#-installation) • [Usage](#-usage) • [Documentation](#-documentation)
+<p align="center">
+  <a href="https://github.com/JashwanthMU/TerraSecure/releases">
+    <img src="https://img.shields.io/github/v/release/JashwanthMU/TerraSecure?style=flat-square&logo=github&color=blue" alt="Release"/>
+  </a>
+  <a href="https://github.com/JashwanthMU/TerraSecure/pkgs/container/terrasecure">
+    <img src="https://img.shields.io/badge/docker-ghcr.io-2496ED?style=flat-square&logo=docker" alt="Docker"/>
+  </a>
+  <a href="https://github.com/marketplace/actions/terrasecure-security-scanner">
+    <img src="https://img.shields.io/badge/marketplace-action-2088FF?style=flat-square&logo=github-actions" alt="Action"/>
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"/>
+  </a>
+  <img src="https://img.shields.io/badge/tests-27_passing-brightgreen?style=flat-square" alt="Tests"/>
+</p>
+
+<p align="center">
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-installation">Installation</a> •
+  <a href="#-usage">Usage</a> •
+  <a href="#-documentation">Documentation</a>
+</p>
 
 </div>
 
