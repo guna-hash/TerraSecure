@@ -24,7 +24,6 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-green?style=flat-square" alt="License"/>
   </a>
-  <img src="https://img.shields.io/badge/tests-27_passing-brightgreen?style=flat-square" alt="Tests"/>
 </p>
 
 <p align="center">
