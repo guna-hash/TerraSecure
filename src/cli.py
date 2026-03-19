@@ -107,7 +107,7 @@ def output_text(results, output_file=None):
     print()
     
     if issues:
-        print(f"{Fore.CYAN}🔍 Detailed Findings (with AI Analysis){Style.RESET_ALL}")
+        print(f"{Fore.CYAN} Detailed Findings (with AI Analysis){Style.RESET_ALL}")
         print(f"{'='*60}\n")
         
         for i, issue in enumerate(issues, 1):
@@ -124,7 +124,7 @@ def output_text(results, output_file=None):
                 features_display = ', '.join(issue['triggered_features'][:3])
                 if len(issue['triggered_features']) > 3:
                     features_display += f" (+{len(issue['triggered_features'])-3} more)"
-                print(f"   🎯 Triggered: {features_display}")
+                print(f"    Triggered: {features_display}")
             
             has_llm = 'llm_explanation' in issue and issue['llm_explanation']
             
@@ -132,19 +132,19 @@ def output_text(results, output_file=None):
                 print(f"\n  {Fore.CYAN}━━━  AI-Enhanced Analysis ━━━{Style.RESET_ALL}")
                 
                 if issue.get('llm_explanation'):
-                    print(f"\n  {Fore.WHITE}💡 Explanation:{Style.RESET_ALL}")
+                    print(f"\n  {Fore.WHITE} Explanation:{Style.RESET_ALL}")
                     print(f"     {issue['llm_explanation']}")
                 
                 if issue.get('llm_business_impact'):
-                    print(f"\n  {Fore.YELLOW}💼 Business Impact:{Style.RESET_ALL}")
+                    print(f"\n  {Fore.YELLOW} Business Impact:{Style.RESET_ALL}")
                     print(f"     {issue['llm_business_impact']}")
                 
                 if issue.get('llm_attack_scenario'):
-                    print(f"\n  {Fore.RED}⚠️  Attack Scenario:{Style.RESET_ALL}")
+                    print(f"\n  {Fore.RED}  Attack Scenario:{Style.RESET_ALL}")
                     print(f"     {issue['llm_attack_scenario']}")
                 
                 if issue.get('llm_detailed_fix'):
-                    print(f"\n  {Fore.GREEN}🔧 Detailed Fix:{Style.RESET_ALL}")
+                    print(f"\n  {Fore.GREEN} Detailed Fix:{Style.RESET_ALL}")
                     fix_lines = issue['llm_detailed_fix'].split('\n')
                     for line in fix_lines:
                         if line.strip():
@@ -154,7 +154,7 @@ def output_text(results, output_file=None):
             
             print()  
     else:
-        print(f"{Fore.GREEN}✅ No security issues found!{Style.RESET_ALL}")
+        print(f"{Fore.GREEN} No security issues found!{Style.RESET_ALL}")
     
     if output_file:
         with open(output_file, 'w', encoding='utf-8') as f:
@@ -176,7 +176,7 @@ def output_text(results, output_file=None):
                 
                 f.write('\n' + '-'*60 + '\n\n')
         
-        print(f"{Fore.CYAN}💾 Results saved to: {output_file}{Style.RESET_ALL}")
+        print(f"{Fore.CYAN} Results saved to: {output_file}{Style.RESET_ALL}")
 
 
 def output_json(results, output_file=None):
@@ -187,7 +187,7 @@ def output_json(results, output_file=None):
     if output_file:
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(json_output)
-        print(f"💾 Results saved to: {output_file}")
+        print(f" Results saved to: {output_file}")
     else:
         print(json_output)
 
@@ -209,7 +209,7 @@ def output_sarif(results, scan_path, output_file=None):
         try:
             from formatters.sarif_formatter import SARIFFormatter
         except ImportError:
-            click.echo("❌ Error: SARIF formatter not found", err=True)
+            click.echo(" Error: SARIF formatter not found", err=True)
             click.echo("   Make sure src/formatters/sarif_formatter.py exists", err=True)
             sys.exit(1)
     
@@ -262,14 +262,14 @@ def output_sarif(results, scan_path, output_file=None):
         num_rules = len(sarif_output['runs'][0]['tool']['driver']['rules'])
         num_results = len(sarif_output['runs'][0]['results'])
         
-        print(f"\n{Fore.CYAN}📊 SARIF Output Generated{Style.RESET_ALL}")
+        print(f"\n{Fore.CYAN} SARIF Output Generated{Style.RESET_ALL}")
         print(f"{'='*60}")
         print(f"Version:  SARIF 2.1.0")
         print(f"Rules:    {num_rules}")
         print(f"Results:  {num_results}")
         print(f"File:     {output_file}")
-        print(f"\n{Fore.GREEN}✅ Ready for GitHub Security upload{Style.RESET_ALL}")
-        print(f"\n💡 Tip: Upload this file to GitHub Security tab:")
+        print(f"\n{Fore.GREEN} Ready for GitHub Security upload{Style.RESET_ALL}")
+        print(f"\n Tip: Upload this file to GitHub Security tab:")
         print(f"   gh api repos/${{OWNER}}/${{REPO}}/code-scanning/sarifs \\")
         print(f"     --input {output_file}")
         
