@@ -1,9 +1,23 @@
-python-hcl2==4.3.2
-colorama==0.4.6
+# CLI and UI
 click==8.1.7
-xgboost==2.0.3
+colorama==0.4.6
+
+# Data Processing
+pandas==2.2.0
+numpy==1.26.3
+
+# Machine Learning
 scikit-learn==1.4.0
+xgboost==2.0.3
 joblib==1.3.2
-pandas==2.1.4
-openai==1.12.0
-python-dotenv==1.0.0
+
+# Terraform Parsing
+hcl2==4.3.2
+
+# AWS Bedrock Integration
+boto3==1.34.144
+botocore==1.34.144
+
+# Testing
+pytest==8.0.0
+pytest-cov==4.1.0
