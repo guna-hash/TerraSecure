@@ -4,8 +4,8 @@ TerraSecure CLI
 Command-line interface for TerraSecure security scanner
 
 Supports:
-- Text output (human-readable with AI insights)
-- JSON output (machine-readable)
+- Text output (human readable with AI insights)
+- JSON output (machine readable)
 - SARIF output (GitHub Security integration)
 """
 
@@ -107,7 +107,7 @@ def output_text(results, output_file=None):
     print()
     
     if issues:
-        print(f"{Fore.CYAN} Detailed Findings (with AI Analysis){Style.RESET_ALL}")
+        print(f"{Fore.CYAN} Detailed Findings{Style.RESET_ALL}")
         print(f"{'='*60}\n")
         
         for i, issue in enumerate(issues, 1):
@@ -140,7 +140,7 @@ def output_text(results, output_file=None):
                     print(f"     {issue['llm_business_impact']}")
                 
                 if issue.get('llm_attack_scenario'):
-                    print(f"\n  {Fore.RED}  Attack Scenario:{Style.RESET_ALL}")
+                    print(f"\n  {Fore.RED} Attack Scenario:{Style.RESET_ALL}")
                     print(f"     {issue['llm_attack_scenario']}")
                 
                 if issue.get('llm_detailed_fix'):
@@ -158,7 +158,7 @@ def output_text(results, output_file=None):
     
     if output_file:
         with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(f"TerraSecure Scan Results (with AI Analysis)\n")
+            f.write(f"TerraSecure Scan Results\n")
             f.write(f"{'='*60}\n\n")
             
             for issue in issues:
@@ -213,7 +213,7 @@ def output_sarif(results, scan_path, output_file=None):
             click.echo("   Make sure src/formatters/sarif_formatter.py exists", err=True)
             sys.exit(1)
     
-    # Convert issues to SARIF-compatible format
+    # Convert issues to SARIF compatible format
     findings = []
     
     for issue in results.get('issues', []):
