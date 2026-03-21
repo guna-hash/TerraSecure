@@ -1,0 +1,60 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9 AM
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  terrasecure-scan:
+    name: TerraSecure Self-Scan
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name:   Checkout code
+        uses: actions/checkout@v4
+      
+      - name:   Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name:   Install TerraSecure
+        run: |
+          pip install -r requirements.txt
+      
+      - name:   Build ML model (if missing)
+        run: |
+          if [ ! -f "models/terrasecure_production_v1.0.pkl" ]; then
+            echo "   Building ML model..."
+            python scripts/build_production_model.py
+          fi
+      
+      - name:   Run TerraSecure Scan
+        run: |
+          python src/cli.py examples/vulnerable \
+            --format sarif \
+            --output terrasecure-results.sarif
+        continue-on-error: true
+      
+      - name:   Upload SARIF to GitHub Security
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: terrasecure-results.sarif
+          category: terrasecure
+      
+      - name:   Display Scan Results
+        if: always()
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "  TerraSecure Security Scan Complete"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          python src/cli.py examples/vulnerable
