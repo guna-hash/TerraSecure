@@ -129,12 +129,21 @@ class SARIFFormatter:
             # Ensure line number is >= 1 (GitHub requirement)
             line_number = max(1, finding.get('line', 1))
             
+            # Build message text
+            message_text = finding.get('title', 'Security issue detected')
+            
+            # Add references to message if available
+            if finding.get('references'):
+                refs = finding['references']
+                if isinstance(refs, list) and refs:
+                    message_text += "\n\n" + "\n".join(refs)
+            
             # Build result
             result = {
                 "ruleId": rule_id,
                 "level": sarif_level,
                 "message": {
-                    "text": finding.get('title', 'Security issue detected')
+                    "text": message_text
                 },
                 "locations": [
                     {
@@ -144,7 +153,7 @@ class SARIFFormatter:
                                 "uriBaseId": "%SRCROOT%"
                             },
                             "region": {
-                                "startLine": line_number,  # ← FIXED: Always >= 1
+                                "startLine": line_number,
                                 "startColumn": 1
                             }
                         },
@@ -162,7 +171,7 @@ class SARIFFormatter:
                 }
             }
             
-            # Add remediation if available
+            # Add remediation as fix if available
             if finding.get('remediation'):
                 result["fixes"] = [
                     {
@@ -178,10 +187,10 @@ class SARIFFormatter:
                                 "replacements": [
                                     {
                                         "deletedRegion": {
-                                            "startLine": line_number  # ← FIXED: Always >= 1
+                                            "startLine": line_number
                                         },
                                         "insertedContent": {
-                                            "text": finding.get('remediation', '')
+                                            "text": finding.get('remediation', '')[:500]  # Limit length
                                         }
                                     }
                                 ]
@@ -189,16 +198,6 @@ class SARIFFormatter:
                         ]
                     }
                 ]
-            
-            # Add references if available
-            if finding.get('references'):
-                result["relatedLocations"] = []
-                for ref in finding['references']:
-                    result["relatedLocations"].append({
-                        "message": {
-                            "text": ref
-                        }
-                    })
             
             results.append(result)
         
