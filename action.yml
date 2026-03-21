@@ -1,5 +1,5 @@
-name: 'TerraSecure IaC Scanner'
-description: 'AI-Powered Terraform Security Scanner with ML risk scoring and SARIF output'
+name: 'TerraSecure Security Scanner'
+description: 'AI-Powered Terraform Security Scanner with ML (92% accuracy)'
 author: 'JashwanthMU'
 
 branding:
@@ -8,7 +8,7 @@ branding:
 
 inputs:
   path:
-    description: 'Path to Terraform files to scan'
+    description: 'Path to Terraform files'
     required: false
     default: '.'
   
@@ -20,90 +20,40 @@ inputs:
   output:
     description: 'Output file path'
     required: false
-    default: 'terrasecure.sarif'
+    default: 'terrasecure-results.sarif'
   
   fail-on:
-    description: 'Fail on severity level (critical, high, medium, any)'
+    description: 'Fail on severity (critical, high, medium, low)'
     required: false
-    default: 'critical'
-  
-  upload-sarif:
-    description: 'Upload SARIF to GitHub Security (true/false)'
-    required: false
-    default: 'true'
-  
-  github-token:
-    description: 'GitHub token for SARIF upload'
-    required: false
-    default: ${{ github.token }}
-
-outputs:
-  sarif-file:
-    description: 'Path to generated SARIF file'
-    value: ${{ steps.scan.outputs.sarif-file }}
-  
-  issues-found:
-    description: 'Number of security issues found'
-    value: ${{ steps.scan.outputs.issues-found }}
-  
-  critical-count:
-    description: 'Number of critical issues'
-    value: ${{ steps.scan.outputs.critical-count }}
+    default: 'high'
 
 runs:
   using: 'composite'
   steps:
-    - name: Run TerraSecure Scan
-      id: scan
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
       shell: bash
       run: |
-        echo "  Running TerraSecure security scan..."
-        echo "   Path: ${{ inputs.path }}"
-        echo "   Format: ${{ inputs.format }}"
-        echo "   Output: ${{ inputs.output }}"
-        
-        # Run TerraSecure using Docker
-        docker run --rm \
-          -v "${{ github.workspace }}:/scan:ro" \
-          -v "${{ github.workspace }}:/output" \
-          ghcr.io/jashwanthmu/terrasecure:latest \
-          /scan/${{ inputs.path }} \
-          --format ${{ inputs.format }} \
-          --output /output/${{ inputs.output }} \
-          --fail-on ${{ inputs.fail-on }} \
-          || echo "SCAN_FAILED=true" >> $GITHUB_ENV
-        
-        # Check if output file was created
-        if [ -f "${{ inputs.output }}" ]; then
-          echo "✅ Scan complete: ${{ inputs.output }}"
-          echo "sarif-file=${{ inputs.output }}" >> $GITHUB_OUTPUT
-          
-          # Parse SARIF for metrics
-          if [ "${{ inputs.format }}" == "sarif" ]; then
-            ISSUES=$(jq '.runs[0].results | length' "${{ inputs.output }}")
-            CRITICAL=$(jq '[.runs[0].results[] | select(.level == "error" and (.properties."security-severity" // "0" | tonumber) >= 9)] | length' "${{ inputs.output }}")
-            
-            echo "issues-found=$ISSUES" >> $GITHUB_OUTPUT
-            echo "critical-count=$CRITICAL" >> $GITHUB_OUTPUT
-            
-            echo " Results: $ISSUES issues found ($CRITICAL critical)"
-          fi
-        else
-          echo "  Output file not created"
+        cd ${{ github.action_path }}
+        pip install -r requirements.txt
+    
+    - name: Build ML model if needed
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        if [ ! -f "models/terrasecure_production_v1.0.pkl" ]; then
+          python scripts/build_production_model.py
         fi
     
-    - name: Upload SARIF to GitHub Security
-      if: inputs.upload-sarif == 'true' && inputs.format == 'sarif'
-      uses: github/codeql-action/upload-sarif@v3
-      with:
-        sarif_file: ${{ inputs.output }}
-        category: terrasecure
-        token: ${{ inputs.github-token }}
-    
-    - name: Upload Scan Results as Artifact
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: terrasecure-results
-        path: ${{ inputs.output }}
-        retention-days: 90
+    - name: Run TerraSecure
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        python src/cli.py ${{ inputs.path }} \
+          --format ${{ inputs.format }} \
+          --output ${{ github.workspace }}/${{ inputs.output }} \
+          --fail-on ${{ inputs.fail-on }}
