@@ -238,33 +238,29 @@ flowchart LR
         FEATURES[50 Security<br/>Features]
         MODEL[XGBoost<br/>5-Fold CV]
         EXPORT[Model Export<br/>177KB]
-        
         DATA --> FEATURES
         FEATURES --> MODEL
         MODEL --> EXPORT
     end
-
     subgraph Inference["Inference"]
         RESOURCE[Terraform<br/>Resource]
         EXTRACT[Feature<br/>Extraction]
         PREDICT[Risk<br/>Prediction]
         SCORE[Risk Score<br/>0.0 - 1.0]
-        
         RESOURCE --> EXTRACT
         EXPORT --> PREDICT
         EXTRACT --> PREDICT
         PREDICT --> SCORE
     end
-
     style Training fill:#e3f2fd
     style Inference fill:#fff8e1
 ```
 
 **Training Data:**
-- Capital One S3 breach (2019)
-- Uber credential leak (2016)
-- Tesla public bucket (2018)
-- MongoDB ransomware (2017)
+- Capital One S3 breach(2019)
+- Uber credential leak(2016)
+- Tesla public bucket(2018)
+- MongoDB ransomware(2017)
 
 </details>
 
@@ -272,7 +268,7 @@ flowchart LR
 
 ## Features
 
-### Machine Learning Detection
+### Machine learning detection
 
 <table>
 <tr>
@@ -289,10 +285,10 @@ flowchart LR
 <td width="50%">
 
 **Real Breach Training**
-- Capital One (S3 misconfiguration)
-- Uber (hardcoded credentials)
-- Tesla (public S3 bucket)
-- MongoDB (exposed database)
+- Capital One(S3 misconfiguration)
+- Uber(hardcoded credentials)
+- Tesla(public S3 bucket)
+- MongoDB(exposed database)
 
 </td>
 </tr>
