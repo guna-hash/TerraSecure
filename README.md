@@ -269,6 +269,9 @@ flowchart LR
 - MongoDB ransomware (2017)
 
 </details>
+
+---
+
 ## Features
 
 ### Machine learning detection
