@@ -1,26 +1,3 @@
-"""
-AWS Bedrock Integration for TerraSecure
-----------------------------------------
-Enterprise-grade AI analysis using Claude 3 Haiku
-
-Features:
-- Cost-optimized with response caching (saves 90% of API calls)
-- Free tier friendly with rate limiting
-- Intelligent fallback when Bedrock unavailable
-- Comprehensive error handling with retries
-- Production logging and monitoring
-- Zero-downtime deployment support
-
-Cost Estimates (with caching):
-- 1000 scans/month: ~$2-5
-- 10,000 scans/month: ~$15-25
-- Free tier: First 1M tokens free
-
-Author: DevSecOps Team
-Version: 1.5.0
-License: MIT
-"""
-
 import boto3
 import json
 import os
