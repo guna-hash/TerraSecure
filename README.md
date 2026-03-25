@@ -66,10 +66,6 @@
 - [Comparison](#comparison)
 - [CI/CD Integration](#cicd-integration)
 - [Documentation](#documentation)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [Community](#community)
-- [License](#license)
 
 </details>
 
@@ -231,28 +227,29 @@ flowchart TB
 4. OUTPUT → Format as Text/JSON/SARIF for humans or tools
 ```
 
-### ML Pipeline:
+### ML Pipeline
 
 <details>
 <summary><b>Click to see ML training and inference pipeline</b></summary>
+  
 ```mermaid
 flowchart LR
-    subgraph Training["Training Pipeline"]
-        DATA[265 Samples<br/>Real Breaches]
-        FEATURES[50 Security<br/>Features]
-        MODEL[XGBoost<br/>5-Fold CV]
-        EXPORT[Model Export<br/>177KB]
+    subgraph Training[" Training Pipeline"]
+        DATA[265 SamplesReal Breaches]
+        FEATURES[50 SecurityFeatures]
+        MODEL[XGBoost5-Fold CV]
+        EXPORT[Model Export177KB]
         
         DATA --> FEATURES
         FEATURES --> MODEL
         MODEL --> EXPORT
     end
 
-    subgraph Inference["Inference"]
-        RESOURCE[Terraform<br/>Resource]
-        EXTRACT[Feature<br/>Extraction]
-        PREDICT[Risk<br/>Prediction]
-        SCORE[Risk Score<br/>0.0 - 1.0]
+    subgraph Inference[" Inference"]
+        RESOURCE[TerraformResource]
+        EXTRACT[FeatureExtraction]
+        PREDICT[RiskPrediction]
+        SCORE[Risk Score0.0 - 1.0]
         
         RESOURCE --> EXTRACT
         EXPORT --> PREDICT
@@ -263,6 +260,7 @@ flowchart LR
     style Training fill:#e3f2fd
     style Inference fill:#fff8e1
 ```
+
 
 **Training Data:**
 - Capital One S3 breach (2019)
@@ -276,7 +274,7 @@ flowchart LR
 
 ## Features
 
-### Machine Learning Detection
+### Machine learning detection
 
 <table>
 <tr>
@@ -293,10 +291,10 @@ flowchart LR
 <td width="50%">
 
 **Real Breach Training**
-- Capital One (S3 misconfiguration)
-- Uber (hardcoded credentials)
-- Tesla (public S3 bucket)
-- MongoDB (exposed database)
+- Capital One(S3 misconfiguration)
+- Uber(hardcoded credentials)
+- Tesla(public S3 bucket)
+- MongoDB(exposed database)
 
 </td>
 </tr>
