@@ -30,19 +30,19 @@ TerraSecure is a **ML-powered security scanner** for Infrastructure as Code that
 ### High-Level Architecture
 ```mermaid
 flowchart TB
-    subgraph Input["📥 Input Sources"]
+    subgraph Input["  Input Sources"]
         TF[Terraform Files]
         HCL[HCL Configurations]
         MOD[Terraform Modules]
     end
 
-    subgraph Parser["🔍 Parser Layer"]
+    subgraph Parser["  Parser Layer"]
         HP[HCL Parser]
         RE[Resource Extractor]
         HP --> RE
     end
 
-    subgraph Detection["🎯 Detection Engine"]
+    subgraph Detection["  Detection Engine"]
         RULES[Rule Engine<br/>50+ Security Patterns]
         ML[ML Model<br/>XGBoost 92% Accuracy]
         FEAT[Feature Extractor<br/>50 Security Features]
@@ -52,7 +52,7 @@ flowchart TB
         FEAT --> ML
     end
 
-    subgraph AI["🧠 AI Analysis Layer"]
+    subgraph AI["  AI Analysis Layer"]
         BEDROCK[AWS Bedrock<br/>Claude 3 Haiku]
         FALLBACK[Intelligent Fallback<br/>Expert Templates]
         CACHE[Response Cache<br/>90% Cost Savings]
@@ -63,13 +63,13 @@ flowchart TB
         FALLBACK --> ENHANCE
     end
 
-    subgraph Output["📊 Output Formats"]
+    subgraph Output["  Output Formats"]
         TEXT[Text Output<br/>Human-Readable]
         JSON[JSON Output<br/>Machine-Readable]
         SARIF[SARIF 2.1.0<br/>GitHub Security]
     end
 
-    subgraph Integration["🔗 Integration Points"]
+    subgraph Integration["  Integration Points"]
         GH[GitHub Actions]
         DOCKER[Docker Container]
         CLI[Command Line]
@@ -83,7 +83,7 @@ flowchart TB
     RE --> RULES
     RE --> FEAT
     
-    FINDINGS[🔍 Security Findings] --> AI
+    FINDINGS[  Security Findings] --> AI
     AI --> ENHANCE[Enhanced Findings<br/>with AI Context]
     
     ENHANCE --> TEXT
@@ -110,7 +110,7 @@ flowchart TB
 ### Training Pipeline
 ```mermaid
 flowchart LR
-    subgraph Training["🎓 ML Training Pipeline"]
+    subgraph Training["  ML Training Pipeline"]
         DATA[Training Data<br/>265 Samples]
         BREACH[Real Breaches<br/>Capital One, Uber, Tesla]
         FEAT_ENG[Feature Engineering<br/>50 Features]
@@ -124,7 +124,7 @@ flowchart LR
         EVAL --> |Model Export|MODEL_FILE[terrasecure_v1.0.pkl<br/>177 KB]
     end
 
-    subgraph Inference["🔮 ML Inference"]
+    subgraph Inference["  ML Inference"]
         RESOURCE[Terraform Resource]
         EXTRACT[Extract 50 Features]
         PREDICT[Predict Risk]
@@ -209,32 +209,32 @@ sequenceDiagram
 ### GitHub Actions Flow
 ```mermaid
 flowchart TB
-    subgraph Developer["👨‍💻 Developer Workflow"]
+    subgraph Developer["  Developer Workflow"]
         CODE[Write Terraform]
         COMMIT[Git Commit]
         PR[Create PR]
     end
 
-    subgraph CI["⚙️ CI/CD Pipeline"]
+    subgraph CI["  CI/CD Pipeline"]
         TRIGGER[GitHub Actions Trigger]
         CLONE[Clone Repository]
         SCAN[TerraSecure Scan]
         SARIF_GEN[Generate SARIF]
     end
 
-    subgraph Analysis["📊 Analysis & Results"]
+    subgraph Analysis["  Analysis & Results"]
         ML_CHECK[ML Risk Scoring]
         AI_EXPLAIN[AI Analysis]
         REPORT[Generate Report]
     end
 
-    subgraph Enforcement["🚦 Policy Enforcement"]
+    subgraph Enforcement["  Policy Enforcement"]
         CRITICAL{Critical<br/>Issues?}
-        BLOCK[❌ Block PR]
-        APPROVE[✅ Allow PR]
+        BLOCK[  Block PR]
+        APPROVE[  Allow PR]
     end
 
-    subgraph Visibility["👀 Visibility"]
+    subgraph Visibility["  Visibility"]
         GH_SEC[GitHub Security Tab]
         PR_COMMENT[PR Comments]
         ARTIFACTS[Scan Artifacts]
