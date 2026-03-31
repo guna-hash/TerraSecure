@@ -1,9 +1,3 @@
-"""
-SARIF Formatter for TerraSecure
---------------------------------
-Generates SARIF 2.1.0 output for GitHub Security integration
-"""
-
 import json
 from typing import List, Dict, Any
 
@@ -126,7 +120,7 @@ class SARIFFormatter:
                 'low': 'note'
             }.get(severity, 'warning')
             
-            # Ensure line number is >= 1 (GitHub requirement)
+            # Ensure line number is >= 1 
             line_number = max(1, finding.get('line', 1))
             
             # Build message text
@@ -190,7 +184,7 @@ class SARIFFormatter:
                                             "startLine": line_number
                                         },
                                         "insertedContent": {
-                                            "text": finding.get('remediation', '')[:500]  # Limit length
+                                            "text": finding.get('remediation', '')[:500]  
                                         }
                                     }
                                 ]
