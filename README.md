@@ -79,7 +79,6 @@ Unlike traditional rule-based tools, TerraSecure:
 - **Reduces noise** with 10.71% false positive rate (better than Checkov's 15%)
 - **Learns from real breaches** including Capital One, Uber, and Tesla incidents
 
-> **Think of it as having a security expert review your infrastructure—but automated and instant.**
 
 ---
 
