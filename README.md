@@ -773,7 +773,7 @@ jobs:
 - [Architecture](docs/ARCHITECTURE.md) - System design and ML model
 
 
-### Advanced topics
+### Advanced topics(will be updated soon!)
 
 - [ML Model Training](docs/ML_MODEL.md) - How the model was built
 - [AI Enhancement](docs/AI_ENHANCEMENT.md) - AWS Bedrock integration
@@ -790,23 +790,6 @@ Contributions welcomed!
 - **Documentation** - Improve our docs
 - **Code contributions** - Fix bugs or add features
 
-### Quick Start:
-```bash
-# Fork and clone
-git clone https://github.com/YOUR_USERNAME/TerraSecure.git
-cd TerraSecure
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run tests
-pytest
-
-# Build ML model
-python scripts/build_production_model.py
-```
-
----
 
 ## Acknowledgments
 
